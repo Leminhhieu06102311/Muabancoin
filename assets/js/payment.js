@@ -1,5 +1,6 @@
 const payment = document.querySelector('.payment')
 const quantity = document.querySelector('.quantity')
+var quantityList = []
 console.log(quantity)
 let sum = 0
 quantity.addEventListener('keypress', (e) => {
