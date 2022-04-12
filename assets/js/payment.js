@@ -11,12 +11,14 @@ quantity.addEventListener('keypress', (e) => {
     console.log(quantityList)
 })
 quantity.addEventListener('keydown', function (e) {
-    if (e.key === 'Backspace') {
+    if (e.key === 'Backspace' || e.key === 'Delete') {
         quantityList.pop()
         console.log(quantityList)
-        sum = parseInt(quantityList.join('')) * 24.700 * 1000
+        sum = parseInt(quantityList.join('')) * 24.700 * 1000 ? parseInt(quantityList.join('')) * 24.700 * 1000 : sum = 0
         sum = sum.toLocaleString('vi', { style: 'currency', currency: 'VND' })
         payment.value = sum
+        console.log(2)
+        
     }
 })
 
