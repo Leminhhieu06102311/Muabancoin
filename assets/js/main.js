@@ -420,7 +420,8 @@ var activeBuySell = () => {
 var renderCoin = function () {
   const priceCoinItem = $$('.price__coin-item')
   for (var i = 0; i < priceCoinItem.length; i++) {
-    priceCoinItem[i].addEventListener('click', (e) => {
+    const item = priceCoinItem[i]
+    item.addEventListener('click', (e) => {
       clickActive()
       clickCoin(e)
     })
