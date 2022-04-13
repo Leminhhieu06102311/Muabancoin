@@ -523,6 +523,8 @@ $duration: 1.4s;
                         border: 1px solid #ced4da;
                         border-top-left-radius: .5rem;
                         border-bottom-left-radius: .5rem;
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
                         &:focus {
                             color: #212529;
                             background-color: #fff;
