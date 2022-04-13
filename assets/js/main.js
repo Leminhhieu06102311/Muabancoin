@@ -133,14 +133,14 @@ var activeBuySell = () => {
   sell.addEventListener('click', function () {
     formSell.innerHTML = `
     <div class="content__buy-heading">
-                            Bán <span class="text-success">WIN</span>
+                            Bán <span class="text-danger">WIN</span>
                             <div></div>
                         </div>
                         <div class="content__buy-form">
     <div class="input__group-s mobile sell">
                                 <div class=" text-primary title">Số lượng <span class="nick-name">WIN</span>  Bán</div>
                                 <div class="form-input">
-                                    <input type="text"  class="quantity">
+                                    <input type="number"  class="quantity">
                                     <span class="buy__form-name" id="buy__form-name">WIN</span>
                                 </div>
                             </div>
@@ -157,14 +157,12 @@ var activeBuySell = () => {
                                 <div class="title">Số tài khoản nhận tiền</div>
                                 <div class="form-input">
                                     <input type="number" class="bgc-white stk-sell">
-                                <span class="buy__form-name" id="buy__form-name">WIN</span>
                                 </div>
                             </div>
                             <div class="input__group-s mobile">
                                 <div class=" title">Tên tài khoản nhận tiền</div>
                                 <div class="form-input">
                                     <input type="text" class="bgc-white your-name">
-                                <span class="buy__form-name" id="buy__form-name">WIN</span>
                                 </div>
                             </div>
                             <div class="input__group-s mobile">

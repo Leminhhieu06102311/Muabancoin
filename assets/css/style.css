@@ -41,6 +41,10 @@ html {
   color: #198754 !important;
 }
 
+.text-danger {
+  color: #dc3545 !important;
+}
+
 .text-primary {
   color: #0d6efd !important;
 }
@@ -463,6 +467,9 @@ html {
 }
 .content__buy-form .input__group-s.mobile .form-input select,
 .content__buy-form .input__group-s.mobile .form-input input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   padding: 1rem;
   flex: 1;
   border: 1px solid #ced4da;
