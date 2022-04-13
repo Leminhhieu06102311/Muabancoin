@@ -483,6 +483,7 @@ $duration: 1.4s;
                     font-size: 1.6rem;
                     font-weight: 600;
                     margin: 1rem 0;
+                    
                 }
                 .form-input {
                     width: 100%;
@@ -529,9 +530,7 @@ $duration: 1.4s;
                     }
                     
                 }
-                .nick-name {
-                    color: #dc3551; 
-                }
+                
                 
             }
 
@@ -831,6 +830,9 @@ $duration: 1.4s;
     }
     .content__buy-form .input__group div label {
         font-size: 1.3rem;
+    }
+    .main .limit.row.no-gutters {
+        margin: 0 3rem;
     }
     
     

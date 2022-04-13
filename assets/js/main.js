@@ -1,3 +1,6 @@
+const $ = document.querySelector.bind(document)
+const $$ = document.querySelectorAll.bind(document)
+const loading = $(".pre-loading")
 var renderHistory = () => {
   const date = new Date()
   const users = [
@@ -72,7 +75,7 @@ var renderHistory = () => {
       time: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}--${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
     },
   ]
-  let historyList = document.querySelector('.history__list')
+  let historyList = $('.history__list')
   users.map((user) => {
     let html =
       `
@@ -106,39 +109,61 @@ var renderHistory = () => {
     handleChangeHistory()
   }, 1000)
 }
-renderHistory()
-const loading = document.querySelector(".pre-loading")
+var clickCoin = (e) => {
+  const nameHeading = $('.content__buy-heading span')
+  const buyFromName = $$("#buy__form-name")
+  const nickName = $('.nick-name')
+  let currentBtn = $('.price__coin-item.active')
+  const textCoin = e.path[0].childNodes[1].children[1].attributes[1].value
+  for (var i = 0; i < buyFromName.length; i++) {
+    buyFromName[i].innerHTML = textCoin
+    nickName.innerHTML = `${textCoin}`
+    nameHeading.innerHTML = `${textCoin}`
+  }
+  currentBtn.classList.remove('active')
+  currentBtn.style.backgroundColor = 'white'
+  e.path[0].classList.add('active')
+  e.path[0].style.backgroundColor = '#d1ecf1'
+}
 var activeBuySell = () => {
-  const coinList = document.querySelector('.content__price-coin')
-  const sell = document.querySelector('.sell')
-  const buy = document.querySelector('.buy')
-  const formSell = document.querySelector('.content__buy-form')
+  const coinList = $('.content__price-coin')
+  const sell = $('.sell')
+  const buy = $('.buy')
+  const formSell = $('.content__buy')
   sell.addEventListener('click', function () {
     formSell.innerHTML = `
-    <div class="input__group-s mobile">
-                                <div class="text-primary title">Số lượng USDTBEP20 Bán</div>
+    <div class="content__buy-heading">
+                            Bán <span class="text-success">WIN</span>
+                            <div></div>
+                        </div>
+                        <div class="content__buy-form">
+    <div class="input__group-s mobile sell">
+                                <div class=" text-primary title">Số lượng <span class="nick-name">WIN</span>  Bán</div>
                                 <div class="form-input">
-                                    <input type="text" value="0" class="quantity">
+                                    <input type="text"  class="quantity">
                                     <span class="buy__form-name" id="buy__form-name">WIN</span>
                                 </div>
                             </div>
                             <div class="input__group-s mobile">
                                 <div class="title">Ngân hàng nhận tiền</div>
                                 <div class="form-input">
-                                    <input type="number" class="bgc-white">
+                                    <select name="" id="select-bank" class="bgc-white">
+                                        <option value="Ngân hàng Vietcombank (VCB)">Ngân hàng Vietcombank (VCB)</option>
+                                        <option value="Ngân hàng Vietcombank1 (VCB)">Ngân hàng Vietcombank1 (VCB)</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="input__group-s mobile">
-                                <div class="nick-name title">Số tài khoản nhận tiền</div>
+                                <div class="title">Số tài khoản nhận tiền</div>
                                 <div class="form-input">
-                                    <input type="number" class="bgc-white">
+                                    <input type="number" class="bgc-white stk-sell">
                                 <span class="buy__form-name" id="buy__form-name">WIN</span>
                                 </div>
                             </div>
                             <div class="input__group-s mobile">
                                 <div class=" title">Tên tài khoản nhận tiền</div>
                                 <div class="form-input">
-                                    <input type="number" class="bgc-white">
+                                    <input type="text" class="bgc-white your-name">
                                 <span class="buy__form-name" id="buy__form-name">WIN</span>
                                 </div>
                             </div>
@@ -162,40 +187,10 @@ var activeBuySell = () => {
                                     Tiếp tục
                                 </button>
                             </div>
+    </div>
     `
-    const payment = document.querySelector('.payment')
-    const quantity = document.querySelector('.quantity')
-    console.log(payment,quantity)
-    const quantityList = []
-    let sum = 0
-    quantity.addEventListener('keypress', (e) => {
-      quantityList.push(parseInt(e.key))
-      sum = parseInt(quantityList.join('')) * 24.700 * 1000
-      sum = sum.toLocaleString('vi', { style: 'currency', currency: 'VND' })
-      payment.value = sum
-    })
-    quantity.addEventListener('keydown', function (e) {
-      if (e.key === 'Backspace') {
-        quantityList.pop()
-        console.log(quantityList)
-        sum = parseInt(quantityList.join('')) * 24.700 * 1000
-        sum = sum.toLocaleString('vi', { style: 'currency', currency: 'VND' })
-        payment.value = sum
-      }
-    })
-    loading.animate([
-      {
-        opacity: 1
-      }, {
-        opacity: 0
-      }
-    ], {
-      duration: 1000
-    })
-    loading.classList.add('active')
-    setTimeout(() => {
-      loading.classList.remove('active')
-    }, 1000);
+    qttBuyOrSell()
+    clickActive()
     sell.classList.add('active')
     buy.classList.add('active')
     coinList.animate([
@@ -267,10 +262,9 @@ var activeBuySell = () => {
       <p style="background-color: #f8d7da; color: #7e2d34;">1.169.108.286 ₫</p>
   </li> 
     `
-    const buyFromName = document.querySelectorAll("#buy__form-name")
-    const priceCoinItem = document.querySelectorAll('.price__coin-item')
-    const nickName = document.querySelector('.nick-name')
+    submit()
 
+    const priceCoinItem = $$('.price__coin-item')
     for (var i = 0; i < priceCoinItem.length; i++) {
       priceCoinItem[i].addEventListener('click', (e) => {
         loading.animate([
@@ -286,21 +280,17 @@ var activeBuySell = () => {
         setTimeout(() => {
           loading.classList.remove('active')
         }, 1000);
-        let currentBtn = document.querySelector('.price__coin-item.active')
-        const textCoin = e.path[0].childNodes[1].children[1].attributes[1].value
-        for (var i = 0; i < buyFromName.length; i++) {
-          buyFromName[i].innerHTML = textCoin
-          nickName.innerHTML = `Biệt danh ${textCoin}`
-        }
-        currentBtn.classList.remove('active')
-        currentBtn.style.backgroundColor = 'white'
-        e.path[0].classList.add('active')
-        e.path[0].style.backgroundColor = '#d1ecf1'
+        clickCoin(e)
       })
     }
   })
   buy.addEventListener('click', function () {
     formSell.innerHTML = `
+    <div class="content__buy-heading">
+                            Mua <span class="text-success">WIN</span>
+                            <div></div>
+                        </div>
+                        <div class="content__buy-form">
     <div class="input__group-s mobile">
                                 <div class="title">Chúng tôi còn</div>
                                 <div class="form-input">
@@ -332,7 +322,9 @@ var activeBuySell = () => {
                                 </div>
                             </div>
                             <div class="input__group-s mobile">  
-                                <div class="nick-name title">Biệt danh WIN</div>
+                            <div class=" title">Biệt danh 
+                            <span class="nick-name"></span>
+                        </div>
                                 <div class="form-input">
                                     <input type="text" placeholder="Biệt danh của bạn" class="bgc-white your-name" required>
                                 </div>
@@ -343,40 +335,10 @@ var activeBuySell = () => {
                                     Tiếp tục
                                 </button>
                             </div>
+    </div>
     `
-    const payment = document.querySelector('.payment')
-    const quantity = document.querySelector('.quantity')
-    const quantityList = []
-    console.log(quantity)
-    let sum = 0
-    quantity.addEventListener('keypress', (e) => {
-      quantityList.push(parseInt(e.key))
-      sum = parseInt(quantityList.join('')) * 24.700 * 1000
-      sum = sum.toLocaleString('vi', { style: 'currency', currency: 'VND' })
-      payment.value = sum
-    })
-    quantity.addEventListener('keydown', function (e) {
-      if (e.key === 'Backspace') {
-        quantityList.pop()
-        console.log(quantityList)
-        sum = parseInt(quantityList.join('')) * 24.700 * 1000
-        sum = sum.toLocaleString('vi', { style: 'currency', currency: 'VND' })
-        payment.value = sum
-      }
-    })
-    loading.animate([
-      {
-        opacity: 1
-      }, {
-        opacity: 0
-      }
-    ], {
-      duration: 1000
-    })
-    loading.classList.add('active')
-    setTimeout(() => {
-      loading.classList.remove('active')
-    }, 1000);
+    qttBuyOrSell()
+    clickActive()
     sell.classList.remove('active')
     buy.classList.remove('active')
     coinList.animate([
@@ -448,75 +410,27 @@ var activeBuySell = () => {
       <p>1.169.108.286 ₫</p>
   </li> 
     `
-    const buyFromName = document.querySelectorAll("#buy__form-name")
-    const priceCoinItem = document.querySelectorAll('.price__coin-item')
-    const nickName = document.querySelector('.nick-name')
+    const priceCoinItem = $$('.price__coin-item')
     for (var i = 0; i < priceCoinItem.length; i++) {
       priceCoinItem[i].addEventListener('click', (e) => {
-        loading.animate([
-          {
-            opacity: 1
-          }, {
-            opacity: 0
-          }
-        ], {
-          duration: 1000
-        })
-        loading.classList.add('active')
-        setTimeout(() => {
-          loading.classList.remove('active')
-        }, 1000);
-        let currentBtn = document.querySelector('.price__coin-item.active')
-        const textCoin = e.path[0].childNodes[1].children[1].attributes[1].value
-        for (var i = 0; i < buyFromName.length; i++) {
-          buyFromName[i].innerHTML = textCoin
-          nickName.innerHTML = `Biệt danh ${textCoin}`
-        }
-        currentBtn.classList.remove('active')
-        currentBtn.style.backgroundColor = 'white'
-        e.path[0].classList.add('active')
-        e.path[0].style.backgroundColor = '#d1ecf1'
+        clickActive()
+        clickCoin(e)
       })
     }
   })
 }
-activeBuySell()
 var renderCoin = function () {
-  const buyFromName = document.querySelectorAll("#buy__form-name")
-  const priceCoinItem = document.querySelectorAll('.price__coin-item')
-  const nickName = document.querySelector('.nick-name')
+  const priceCoinItem = $$('.price__coin-item')
   for (var i = 0; i < priceCoinItem.length; i++) {
     priceCoinItem[i].addEventListener('click', (e) => {
-      loading.animate([
-        {
-          opacity: 1
-        }, {
-          opacity: 0
-        }
-      ], {
-        duration: 1000
-      })
-      loading.classList.add('active')
-      setTimeout(() => {
-        loading.classList.remove('active')
-      }, 1000);
-      let currentBtn = document.querySelector('.price__coin-item.active')
-      const textCoin = e.path[0].childNodes[1].children[1].attributes[1].value
-      for (var i = 0; i < buyFromName.length; i++) {
-        buyFromName[i].innerHTML = textCoin
-        nickName.innerHTML = `Biệt danh ${textCoin}`
-      }
-      currentBtn.classList.remove('active')
-      currentBtn.style.backgroundColor = 'white'
-      e.path[0].classList.add('active')
-      e.path[0].style.backgroundColor = '#d1ecf1'
+      clickActive()
+      clickCoin(e)
     })
   }
 
 }
-renderCoin()
 var clickActive = function () {
-  const loading = document.querySelector(".pre-loading")
+  const loading = $(".pre-loading")
   loading.animate([
     {
       opacity: 1
@@ -533,7 +447,7 @@ var clickActive = function () {
 }
 
 function checkFirstVisit() {
-  const loading = document.querySelector(".pre-loading")
+  const loading = $(".pre-loading")
   if (document.cookie.indexOf('mycookie') == -1) {
     document.cookie = 'mycookie=1';
   }
@@ -553,3 +467,6 @@ function checkFirstVisit() {
     }, 1000);
   }
 }
+renderHistory()
+activeBuySell()
+renderCoin()

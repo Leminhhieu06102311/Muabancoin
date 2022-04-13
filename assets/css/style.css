@@ -481,9 +481,6 @@ html {
 .content__buy-form .input__group-s.mobile .form-input input:last-child {
   border-radius: 0.5rem;
 }
-.content__buy-form .input__group-s.mobile .nick-name {
-  color: #dc3551;
-}
 .content__buy-form .continute {
   margin-top: 1rem;
   display: flex;
@@ -730,6 +727,10 @@ html {
 
   .content__buy-form .input__group div label {
     font-size: 1.3rem;
+  }
+
+  .main .limit.row.no-gutters {
+    margin: 0 3rem;
   }
 }
 

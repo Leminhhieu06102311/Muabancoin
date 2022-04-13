@@ -1,28 +1,47 @@
-const payment = document.querySelector('.payment')
-const quantity = document.querySelector('.quantity')
-var quantityList = []
-console.log(quantity)
-let sum = 0
-quantity.addEventListener('keypress', (e) => {
-    quantityList.push(parseInt(e.key))
-    sum = parseInt(quantityList.join('')) * 24.700 * 1000
-    sum = sum.toLocaleString('vi', { style: 'currency', currency: 'VND' })
-    payment.value = sum
-    console.log(quantityList)
-})
-quantity.addEventListener('keydown', function (e) {
-    if (e.key === 'Backspace' || e.key === 'Delete') {
-        quantityList.pop()
-        console.log(quantityList)
-        sum = parseInt(quantityList.join('')) * 24.700 * 1000 ? parseInt(quantityList.join('')) * 24.700 * 1000 : sum = 0
-        sum = sum.toLocaleString('vi', { style: 'currency', currency: 'VND' })
-        payment.value = sum
-        console.log(2)
-        
-    }
-})
 
-;(function () {
+var quantityList = []
+var qttBuyOrSell = function() {
+    const quantity = document.querySelector('.quantity')
+    const payment = document.querySelector('.payment')
+    let sum = 0
+    quantity.addEventListener('keydown', function (e) {
+        console.log(e)
+        if (e.key === '1'
+            || e.key === '2'
+            || e.key === '3'
+            || e.key === '4'
+            || e.key === '5'
+            || e.key === '6'
+            || e.key === '7'
+            || e.key === '8'
+            || e.key === '9'
+            || e.key === '0'
+        ) {
+            quantityList.push(parseInt(e.key))
+            sum = parseInt(quantityList.join('')) * 24.700 * 1000
+            sum = sum.toLocaleString('vi', { style: 'currency', currency: 'VND' })
+            payment.value = sum
+            console.log('nhap so luong')
+        }else if (e.key === 'Backspace' || e.key === 'Delete') {
+            quantityList.pop()
+            sum = parseInt(quantityList.join('')) * 24.700 * 1000 ? parseInt(quantityList.join('')) * 24.700 * 1000 : sum = 0
+            sum = sum.toLocaleString('vi', { style: 'currency', currency: 'VND' })
+            payment.value = sum
+
+        }else if (e.ctrlKey) {
+            if (e.keyCode == 65 || e.keyCode == 97) {
+                quantityList = []
+                sum = 0
+                sum = sum.toLocaleString('vi', { style: 'currency', currency: 'VND' })
+                payment.value = sum
+            }
+        }
+    })
+}
+
+var submit = function() {
+    const checkSell = document.querySelector('.input__group-s.mobile.sell')
+    const payment = document.querySelector('.payment')
     const payments = document.querySelector('.content__buy')
     const continute = document.querySelector('.submit')
     const info = []
@@ -32,7 +51,6 @@ quantity.addEventListener('keydown', function (e) {
     const bank = document.querySelector("#select-bank")
     const loading = document.querySelector(".pre-loading")
     continute.addEventListener('click', () => {
-        console.log(payment.value)
         if (yourName.value === '' && payment.value <= 0) {
             swal("Lỗi", "Vui lòng nhập đầy đủ thông tin", "error")
         } else if (yourName.value === '') {
@@ -57,7 +75,75 @@ quantity.addEventListener('keydown', function (e) {
             info.push(parseInt(quantityList.join('')))
             info.push(yourName.value)
             info.push(bank.value)
-            payments.innerHTML = `
+            if (checkSell) {
+                const stkSell = document.querySelector('.stk-sell')
+                info.push(stkSell.value)
+                payments.innerHTML = `
+                <div class="content__buy-heading">
+                Bán <span class="text-success">WIN</span>
+                <div></div>
+                </div>
+                <div class="content__buy-form">
+                <ul>
+                    <li>
+                        <p>Mã giao dịch</p>
+                        <div class="trading-code">
+                            <h2 style="color: #038004;">${tradingCode.toUpperCase()}</h2>
+                            <div style="color: #96dff6; font-size: 1.2rem;">Cung cấp mã giao dịch này nếu bạn cần hỗ trợ về đơn hàng.</div>
+                        </div>
+                    </li>
+                    <li>
+                        <p>Nhận tiền qua</p>
+                        <p>Chuyển Khoản ngân hàng</p>
+                    </li>
+                    <li>
+                        <p>Tài khoản nhận tiền</p>
+                        <p>${info[4]} (${info[2]})</p>   
+                    </li>
+                    <li>
+                        <p>Ngân hàng</p>
+                        <p> ${info[3]}</p>
+                    </li>
+                    <li>
+                        <p>Số tiền nhận</p>
+                        <p style="font-weight: 600;">${info[0]}</p>
+                    </li>
+                    <li>
+                        <p>Số lượng WIN bán</p>
+                        <p>${info[1]}</p>
+                    </li>
+                    <li>
+                        <p>Tỷ giá</p>
+                        <p>24.700 ₫</p>
+                    </li>
+                    <li>
+                        <p>Ngày giao dịch</p>
+                        <p>${newDate.getFullYear()}-${newDate.getMonth() + 1}-${newDate.getDate()}</p>
+                    </li>
+                    <li>
+                        <p>Trạng thái</p>
+                        <p style="font-weight: 600; color: #6c757d;">Chờ thanh toán...</p>
+                    </li>
+                    <li style="display: block;">
+                        <h3 class="new-title">Bạn vui lòng chuyển đúng ${info[1]} WIN vào</h3>
+                        <div style="display: flex;font-size: 1.6rem;padding: 1rem;">
+                            <i class="fa-solid fa-arrows-turn-right" style="padding:0 1rem;"></i>
+                            <div>Biệt danh: </div>
+                            <b style="padding: 0 1rem;">SPMuabancoin3</b>
+                        </div>
+                        <div style="display: flex;font-size: 1.6rem;padding: 1rem;">
+                            <i class="fa-solid fa-arrows-turn-right" style="padding:0 1rem;"></i>
+                            <div>Ghi chú (Memo):</div>
+                            <b style="padding: 0 1rem;">${tradingCode.toUpperCase()}</b>
+                        </div>
+                    <li style="justify-content: center; padding: 1rem 0;">
+                        <div id="app"></div>
+                    </li>
+                </ul>
+                </div>
+                `
+            } else {
+                payments.innerHTML = `
                 <div class="content__buy-heading">
                 Mua <span class="text-success">WIN</span>
                 <div></div>
@@ -139,7 +225,7 @@ quantity.addEventListener('keydown', function (e) {
                 </ul>
                 </div>
                 `
-            // Credit: Mateusz Rybczonec
+            }
 
             const FULL_DASH_ARRAY = 283;
             const WARNING_THRESHOLD = 10;
@@ -257,6 +343,6 @@ quantity.addEventListener('keydown', function (e) {
         }
 
     })
-})()
-
-
+}
+submit()
+qttBuyOrSell()
