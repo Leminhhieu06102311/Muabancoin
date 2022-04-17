@@ -33,7 +33,7 @@
                 <a href="./index.html" class="header__img" onclick="clickActive()">
                     <img src="./assets/img/logo/USDT.webp" alt="">
                 </a>
-                <a href="./limit.html" class="header__level">
+                <a href="./assets/limit" class="header__level">
                     <p>Hạn mức giao dịch</p>
                 </a>
             </div>
@@ -170,14 +170,16 @@
                                 </div>
                             </div>
                             <div class="input__group-s mobile">  
-                                <div class=" title">Biệt danh 
-                                    <span class="nick-name"></span>
+                                <div class=" title">
+                                    <span class="nick-name">Biệt Danh WIN</span>
                                 </div>
                                 <div class="form-input">
                                     <input type="text" placeholder="Biệt danh của bạn" class="bgc-white your-name" required>
                                 </div>
                             </div>
-                            <div class="g-recaptcha continute" data-sitekey="<?php echo $siteKey; ?>"></div>
+                            <div class="toggle-recapcha">
+                                <div class="g-recaptcha continute" data-sitekey="<?php echo $siteKey; ?>"></div>
+                            </div>
                             <div class="continute">
                                 <button class="submit">
                                     Tiếp tục

@@ -41,7 +41,9 @@ html {
     font-size: 62.5%;
     font-family: Arial, sans-serif;
 }
-
+.toggle-recapcha {
+    display: none;
+}
 .text-success {
     color: #198754 !important;
 }

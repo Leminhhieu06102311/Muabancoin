@@ -37,6 +37,10 @@ html {
   font-family: Arial, sans-serif;
 }
 
+.toggle-recapcha {
+  display: none;
+}
+
 .text-success {
   color: #198754 !important;
 }
@@ -475,6 +479,8 @@ html {
   border: 1px solid #ced4da;
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .content__buy-form .input__group-s.mobile .form-input select:focus,
 .content__buy-form .input__group-s.mobile .form-input input:focus {

@@ -21,7 +21,6 @@ var qttBuyOrSell = function() {
             sum = parseInt(quantityList.join('')) * 24.700 * 1000
             sum = sum.toLocaleString('vi', { style: 'currency', currency: 'VND' })
             payment.value = sum
-            console.log('nhap so luong')
         }else if (e.key === 'Backspace' || e.key === 'Delete') {
             quantityList.pop()
             sum = parseInt(quantityList.join('')) * 24.700 * 1000 ? parseInt(quantityList.join('')) * 24.700 * 1000 : sum = 0

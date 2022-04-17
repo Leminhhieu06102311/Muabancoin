@@ -117,7 +117,11 @@ var clickCoin = (e) => {
   const textCoin = e.path[0].childNodes[1].children[1].attributes[1].value
   for (var i = 0; i < buyFromName.length; i++) {
     buyFromName[i].innerHTML = textCoin
-    nickName.innerHTML = `${textCoin}`
+    if (textCoin === 'ETH' || textCoin === 'BTC') {
+      nickName.innerHTML = `Địa Chỉ Ví ${textCoin}`
+    } else {
+      nickName.innerHTML = `Biệt Danh ${textCoin}`
+    }
     nameHeading.innerHTML = `${textCoin}`
   }
   currentBtn.classList.remove('active')
@@ -175,7 +179,7 @@ var activeBuySell = () => {
                             <div class="input__group-s mobile">
                                 <div class="title">Chúng tôi còn</div>
                                 <div class="form-input">
-                                    <input type="number" class="bgc-white" value="1000000" disabled>
+                                    <input type="text" class="bgc-white money-sell" value="" disabled>
                                 <span class="buy__form-name" id="buy__form-name">WIN</span>
                                 </div>
                             </div>
@@ -189,6 +193,9 @@ var activeBuySell = () => {
     `
     qttBuyOrSell()
     clickActive()
+    const moneySell = $('.money-sell')
+    var moneySellQtt = 1000000 * 1000
+    moneySell.value = moneySellQtt.toLocaleString('vi', { style: 'currency', currency: 'VND' })
     sell.classList.add('active')
     buy.classList.add('active')
     coinList.animate([
@@ -337,6 +344,7 @@ var activeBuySell = () => {
     `
     qttBuyOrSell()
     clickActive()
+    submit()
     sell.classList.remove('active')
     buy.classList.remove('active')
     coinList.animate([
@@ -466,6 +474,9 @@ function checkFirstVisit() {
     }, 1000);
   }
 }
+window.addEventListener('load',() => {
+  $('.toggle-recapcha').style.display = 'block'
+})
 renderHistory()
 activeBuySell()
 renderCoin()
